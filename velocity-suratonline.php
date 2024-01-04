@@ -40,7 +40,8 @@ $includes = [
 	'admin/register-page.php',	// Page Register
 	'inc/ajax.php',		// AJAX
 	'inc/enqueue.php',	// Load css & js
-	'inc/shortcode.php',
+	'inc/shortcode.php',	// Load shortcode
+	'inc/form-tambahuser.php',	// Load Form Tambah User
 	'inc/post-surat.php',	// Post Pengajuan Surat
 	'inc/post-surat-metabox.php'	// Metabox Post Pengajuan Surat
 ];
