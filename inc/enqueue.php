@@ -19,7 +19,7 @@ if (!function_exists('velocitysurat_register_scripts')) {
             $the_version = $the_version . '.' . time();
         }
 
-        // wp_enqueue_style('velocitytoko-store-style', VELOCITY_SURAT_PLUGIN_URL . 'public/css/style-store.css', array(), $the_version, false);
+        wp_enqueue_style('velocitysurat-style', VELOCITY_SURAT_PLUGIN_URL . 'public/css/surat-style.css', array(), $the_version, false);
 
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-slider');

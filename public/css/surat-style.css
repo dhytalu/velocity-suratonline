@@ -1,0 +1,4 @@
+.sidebar-surat, .sidebar-surat a, .sidebar-surat a:hover {
+    color: var(--bs-light) !important;
+    font-size: 14px;
+}
