@@ -350,6 +350,38 @@ function vd_tambah_user()
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group alert alert-primary p-2">
+                            <label class="text-right"><strong>STATUS PERKAWINAN :</strong></label>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-md-4 p-1">
+                                <div class="form-floating mb-2">
+                                    <select class="form-select" id="perkawinan">
+                                        <option selected>--Pilih Status Perkawinan--</option>
+                                        <option value="BELUM KAWIN">BELUM KAWIN</option>
+                                        <option value="KAWIN">KAWIN</option>
+                                        <option value="CERAI HIDUP">CERAI HIDUP</option>
+                                        <option value="CERAI MATI">CERAI MATI</option>
+                                    </select>
+                                    <label for="perkawinan">Status Perkawinan</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 p-1">
+                                <div class="form-floating mb-2">
+                                    <input class="form-control" type="text" id="noakta_nikah" name="noakta_nikah" placeholder="" readonly>
+                                    <label for="noakta_nikah">No. Akta Nikah</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 p-1">
+                                <div class="form-floating mb-2">
+                                    <input class="form-control" type="text" id="noakta_cerai" name="noakta_cerai" placeholder="" readonly>
+                                    <label for="noakta_cerai">No. Akta Cerai</label>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <!-- 
                         <div class="d-flex align-items-center justify-content-center">
                             <div class="flex-fill text-start">

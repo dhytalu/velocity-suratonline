@@ -60,6 +60,28 @@ jQuery(function ($) {
             }
         });
     });
+
+    $(document).on('change', '#perkawinan', function() {
+        var nilai = $(this).val();
+        if (nilai != 'BELUM KAWIN' && nilai != 'CERAI HIDUP') {
+            $('#noakta_nikah').attr({readonly:false, required:true});
+            $('#noakta_cerai').attr({readonly:true, required:false, value:' '});
+
+            // reset value
+            $('#noakta_cerai').val('');
+        } else if (nilai == 'CERAI HIDUP') {
+            $('#noakta_nikah').attr({readonly:false, required:true});
+            $('#noakta_cerai').attr({readonly:false, required:true});
+        } else {
+            // add read only & required
+            $('#noakta_nikah').attr({readonly:true, required:false});
+            $('#noakta_cerai').attr({readonly:true, required:false});
+
+            // reset value
+            $('#noakta_nikah').val('');
+            $('#noakta_cerai').val('');
+        }
+    });
 });
 
 function hanyaAngka(event) {
