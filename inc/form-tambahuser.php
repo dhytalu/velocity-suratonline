@@ -7,11 +7,21 @@
  */
 // [form-tambah-user]
 add_shortcode('form-tambah-user', 'vd_tambah_user');
-function vd_tambah_user()
+function vd_tambah_user($atts)
 {
     ob_start();
+    $atribut = shortcode_atts(array(
+        'user_id'   => get_current_user_id(), // id user
+        'mode'  => 'add' // mode form (edit/add)
+    ), $atts);
+    $mode       = $atribut['mode'];
 
-    if (isset($_POST['tambah_pengguna'])) {
+    if ($mode == 'edit') {
+        $disable = 'disabled';
+    } else if ($mode == 'add') {
+        $disable = ' ';
+    }
+    if (isset($_POST['submit_data'])) {
         // Mengambil data dari form
         $nama_lengkap = $_POST['nama_lengkap'];
         $pass = $_POST['password'];
@@ -39,18 +49,31 @@ function vd_tambah_user()
             $photo = '';
         }
 
-        // Memasukkan data ke dalam database WordPress
-        $user_data = array(
-            'user_login' => $nik, // Menggunakan Nama Lengkap sebagai username
-            'user_pass' => $pass, // Menghasilkan password acak
-            'user_email' => $email, // Email dapat ditambahkan jika diperlukan
-            'display_name' => $nama_lengkap,
-            'first_name' => $nama_lengkap,
-            'last_name' => '',
-            'role' => 'subscriber' // Mengatur peran pengguna sesuai kebutuhan
-        );
+        if ($mode == 'add') {
+            // Memasukkan data ke dalam database WordPress
+            $user_data = array(
+                'user_login' => $nik, // Menggunakan Nama Lengkap sebagai username
+                'user_pass' => $pass, // Menghasilkan password acak
+                'user_email' => $email, // Email dapat ditambahkan jika diperlukan
+                'display_name' => $nama_lengkap,
+                'first_name' => $nama_lengkap,
+                'last_name' => '',
+                'role' => 'subscriber' // Mengatur peran pengguna sesuai kebutuhan
+            );
 
-        $user_id = wp_insert_user($user_data);
+            $user_id = wp_insert_user($user_data);
+        } elseif ($mode == 'edit') {
+            $user_id    = $atribut['user_id'];
+            // Get the current user object
+            $user = get_user_by('ID', $user_id);
+
+            // Update the display name
+            $user->first_name = $nama_lengkap;
+
+            // Save the updated user data
+            wp_update_user($user);
+        }
+
 
         // Menyimpan data tambahan ke dalam meta pengguna
         update_user_meta($user_id, 'no_kk', $no_kk);
@@ -93,7 +116,7 @@ function vd_tambah_user()
                         <div class="row m-0">
                             <div class="col-md-4 p-1">
                                 <div class="form-floating mb-2">
-                                    <input class="form-control" type="text" id="nik" name="nik" minlength="16" maxlength="16" placeholder="" onkeypress="return hanyaAngka(event)" required>
+                                    <input class="form-control" type="text" id="nik" name="nik" minlength="16" maxlength="16" placeholder="" onkeypress="return hanyaAngka(event)" <?php echo $disable ?> required>
                                     <label for="nik">NIK</label>
                                     <small class="text-warning">Akan digunakan untuk username login</small>
                                 </div>
@@ -106,7 +129,7 @@ function vd_tambah_user()
                             </div>
                             <div class="col-md-4 p-1">
                                 <div class="form-floating mb-2">
-                                    <input class="form-control" type="text" id="no_kk" name="no_kk" minlength="16" maxlength="16" placeholder="" onkeypress="return hanyaAngka(event)" required>
+                                    <input class="form-control" type="text" id="no_kk" name="no_kk" minlength="16" maxlength="16" placeholder="" onkeypress="return hanyaAngka(event)" <?php echo $disable ?> required>
                                     <label for="no_kk">No KK</label>
                                 </div>
                             </div>
@@ -127,7 +150,7 @@ function vd_tambah_user()
                             <div class="col-md-4 p-1">
                                 <div class="form-floating mb-2">
                                     <select class="form-select" id="jenis_kelamin">
-                                        <option selected>--Pilih Agama--</option>
+                                        <option selected>--Pilih Jenis Kelamin--</option>
                                         <option value="Laki-Laki">Laki-Laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                     </select>
@@ -391,7 +414,7 @@ function vd_tambah_user()
                             <button class="btn rounded-0 text-white btn-flat btn-dark btn-sm" type="reset" name="reset_form"><i class="fa fa-undo"></i> Reset</button>
                         </div>
                         <div class="flex-fill text-end">
-                            <button class="btn rounded-0 text-white btn-flat btn-info btn-sm" type="submit" name="tambah_pengguna"><i class="fa fa-check"></i> Simpan</button>
+                            <button class="btn rounded-0 text-white btn-flat btn-info btn-sm" type="submit" name="submit_data"><i class="fa fa-check"></i> Simpan</button>
                         </div>
                     </div>
                 </div>
